@@ -1,0 +1,16 @@
+# Untracked files
+
+*.ali
+*.o
+*.exe
+*.iml
+*.sln
+*.vcxproj
+*.filters
+*.db
+*.opendb
+*.user
+*.suo
+
+**/Debug/
+**/Release/
