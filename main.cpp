@@ -1,10 +1,15 @@
 #include <iostream>
 #include "windows.h"
+// Assignment #2
+ // Student: Smishniy Dmitriy
+ // Group: IO-41
+ // Date: 30/03/2017
+ // a=max(e*Z+d*T*(MO*MK))
 
 using std::cout;
 using std::endl;
 
-const int n = 4;
+const int n = 1000;
 const int p = 4;
 const int h = n / p;
 
@@ -171,7 +176,7 @@ void task2() {
 	memcpy(MO2, MO, sizeof(MO));
 	LeaveCriticalSection(&section);
 	//  account
-	buff2 = function(Z, T2, MO2, MK, e2, d2, 0, h);
+	buff2 = function(Z, T2, MO2, MK, e2, d2, h+1, 2*h);
 
 	WaitForSingleObject(M1, INFINITE);
 	if (a<buff2) a = buff2;
@@ -214,7 +219,7 @@ void task3() {
 	memcpy(MO3, MO, sizeof(MO));
 	LeaveCriticalSection(&section);
 	//  account
-	buff3 = function(Z, T3, MO3, MK, e3, d3, 0, h);
+	buff3 = function(Z, T3, MO3, MK, e3, d3, (2*h)+1, 3*h);
 
 	WaitForSingleObject(M1, INFINITE);
 	if (a<buff3) a = buff3;
@@ -256,7 +261,7 @@ void task4() {
 	memcpy(MO4, MO, sizeof(MO));
 	LeaveCriticalSection(&section);
 	//  account
-	buff4 = function(Z, T4, MO4, MK, e4, d4, 0, h);
+	buff4 = function(Z, T4, MO4, MK, e4, d4, (3*h)+1, 4*h);
 
 	WaitForSingleObject(M1, INFINITE);
 	if (a<buff4) a = buff4;
@@ -277,10 +282,12 @@ void task4() {
 int main() {
 	cout << "Program started" << endl;
 
-	HANDLE T1 = CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)task1, NULL, CREATE_SUSPENDED, NULL);
-	HANDLE T2 = CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)task2, NULL, CREATE_SUSPENDED, NULL);
-	HANDLE T3 = CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)task3, NULL, CREATE_SUSPENDED, NULL);
-	HANDLE T4 = CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)task4, NULL, CREATE_SUSPENDED, NULL);
+	size_t st = 100 * 1024 * 1024;
+
+	HANDLE T1 = CreateThread(NULL, st, (LPTHREAD_START_ROUTINE)task1, NULL, CREATE_SUSPENDED, NULL);
+	HANDLE T2 = CreateThread(NULL, st, (LPTHREAD_START_ROUTINE)task2, NULL, CREATE_SUSPENDED, NULL);
+	HANDLE T3 = CreateThread(NULL, st, (LPTHREAD_START_ROUTINE)task3, NULL, CREATE_SUSPENDED, NULL);
+	HANDLE T4 = CreateThread(NULL, st, (LPTHREAD_START_ROUTINE)task4, NULL, CREATE_SUSPENDED, NULL);
 
 	InitializeCriticalSection(&section);
 
